@@ -11,6 +11,7 @@ enum Status{
     Resolved = "resolved"
 };
 
+//Interface of ticket
 interface Ticket {
     id: number;
     title: string;
@@ -20,6 +21,16 @@ interface Ticket {
     createdAt: Date;
 }
 
+// extending Ticket interface using Type
+// Remove description from the original Ticket interface using Omit
+// and add urgent variables
+type TicketUrgency = Omit<Ticket, "description"> & {
+    ticketAge: number;
+    urgencyScore: number;
+    urgencyLevel: string;
+};
+
+// Tickets
 const tickets: Ticket[] = [
     {id: 1, title: "Update footer copyright year", description: "Footer still shows 2024", priority: Priority.Low, status: Status.Open, createdAt: new Date()},
     {id: 2, title: "Profile picture upload slow", description: "Upload takes 30+ seconds", priority: Priority.Medium, status: Status.Open, createdAt: new Date()},
@@ -31,5 +42,9 @@ const tickets: Ticket[] = [
 
 ];
 
-export const createTicket = (ticket: Ticket): Ticket | undefined => {
-}
+export const createTicket = (id: number, title: string, description: string, priority: Priority, status: Status,createdAt: Date): Ticket => {
+
+    return { id: id, title: title, description: description, priority: priority, status: status, createdAt: createdAt };
+
+};
+
