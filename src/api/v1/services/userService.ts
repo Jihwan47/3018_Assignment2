@@ -48,3 +48,9 @@ export const createTicket = (id: number, title: string, description: string, pri
 
 };
 
+// return all tickets in the array.
+export function retrieveAllTicket(): Ticket[]{
+
+    return tickets;
+};
+
