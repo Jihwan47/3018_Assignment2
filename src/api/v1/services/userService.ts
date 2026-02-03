@@ -54,3 +54,11 @@ export function retrieveAllTicket(): Ticket[]{
     return tickets;
 };
 
+export function getTicketById(id: number): Ticket | undefined{
+
+    return tickets.find(ticket => ticket.id === id);
+};
+
+
+
+export const delete
