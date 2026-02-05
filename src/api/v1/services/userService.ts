@@ -78,7 +78,7 @@ export const getTicketById = (id: number): Ticket | undefined => {
         throw new Error("Ticket not found");
     }
 
-    return tickets.find(ticket => ticket.id === id);
+    return ticket;
 };
 
 export const updateTicket = (id: number, data: any): Ticket | undefined => {
