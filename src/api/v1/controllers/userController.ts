@@ -138,4 +138,27 @@ export const deleteTicket = (req: Request, res: Response): void => {
     }
 };
 
+export const getUrgentTicketById = (req: Request, res: Response): void => {
 
+    const id: number = Number(req.params.id);
+
+    if(isNaN(id)){
+        res.status(HTTP_STATUS.BAD_REQUEST).json({
+            message: "Invalid ticket id",
+        });
+        return;
+    }
+
+    try{
+        const urgentTicket = userService.getUrgentTicketById(id); 
+
+        res.status(HTTP_STATUS.OK).json({
+            message: "Ticket urgency retrieved successfully",
+            data: urgentTicket
+        });
+    } catch {
+        res.status(HTTP_STATUS.NOT_FOUND).json({
+            message: "Ticket not found",
+        });
+    }
+};
