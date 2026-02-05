@@ -113,3 +113,29 @@ export const updateTicket = (req: Request, res: Response): void => {
     }
 };
 
+export const deleteTicket = (req: Request, res: Response): void => {
+
+    const id: number = Number(req.params.id);
+
+    if(isNaN(id)){
+        res.status(HTTP_STATUS.BAD_REQUEST).json({
+            message: "Invalid ticket id",
+        });
+        return;
+    }
+
+    try{
+        const deleteTicket = userService.deleteTicket(id); 
+
+        res.status(HTTP_STATUS.OK).json({
+            message: "Ticket succesfully deleted",
+            data: deleteTicket
+        });
+    } catch {
+        res.status(HTTP_STATUS.NOT_FOUND).json({
+            message: "Ticket not found",
+        });
+    }
+};
+
+
