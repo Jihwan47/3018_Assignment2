@@ -26,7 +26,7 @@ export const createTicket = (req: Request, res: Response): void => {
 
     const priorityLevel = ["critical", "high", "medium", "low" ]
 
-    if(priorityLevel.includes(priority)){
+    if(!priorityLevel.includes(priority)){
         res.status(HTTP_STATUS.BAD_REQUEST).json({
         message: "Invalid priority. Must be one of: critical, high, medium, low",
         });
@@ -66,37 +66,50 @@ export const getAllTickets = (req: Request, res: Response): void => {
 //retrieve
 export const getTicketById = (req: Request, res: Response): void => {
     //extract
-    const idParam = req.params.id;
+    const id: number = Number(req.params.id);
 
-    //convert it into number
-    const id = Number(idParam)
-
-    if(!isNaN(id)){
+    if(isNaN(id)){
         res.status(HTTP_STATUS.BAD_REQUEST).json({
             message: "Invalid ticket id",
         });
         return;
     }
-
+    
     try{
         const ticket = userService.getTicketById(id);
-
-        if(!ticket){
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Ticket not found",
-            });
-            return;
-        }
 
         res.status(HTTP_STATUS.OK).json({
             message:"Specific ticket retrieved succesfully",
             data: ticket
         });
     } catch {
-        res.status(HTTP_STATUS.BAD_REQUEST).json({
+        res.status(HTTP_STATUS.NOT_FOUND).json({
             message: "Ticket not found",
         });
     }
 };
 
+export const updateTicket = (req: Request, res: Response): void => {
+
+    const id: number = Number(req.params.id);
+
+    if(isNaN(id)){
+        res.status(HTTP_STATUS.BAD_REQUEST).json({
+            message: "Invalid ticket id",
+        });
+        return;
+    }
+    try{
+        const updateTicket = userService.updateTicket(id, req.body); 
+
+        res.status(HTTP_STATUS.OK).json({
+            message: "Ticket succesfully updated",
+            data: updateTicket
+        });
+    } catch {
+        res.status(HTTP_STATUS.NOT_FOUND).json({
+            message: "Failed to update the ticket",
+        });
+    }
+};
 
