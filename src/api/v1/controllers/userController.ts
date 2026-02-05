@@ -48,3 +48,18 @@ export const createTicket = (req: Request, res: Response): void => {
     }
 };
 
+//retrieve
+export const getAllTickets = (req: Request, res: Response): void => {
+    try{
+        const tickets = userService.getAllTicket();
+        res.status(HTTP_STATUS.OK).json({
+            message: "All tickets retrieved successfully",
+            data: tickets
+        });
+    } catch (error: unknown) {
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
+            message: "Failed to retrieve tickets",
+        });
+    }
+};
+
