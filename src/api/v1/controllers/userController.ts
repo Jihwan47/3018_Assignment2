@@ -63,3 +63,40 @@ export const getAllTickets = (req: Request, res: Response): void => {
     }
 };
 
+//retrieve
+export const getTicketById = (req: Request, res: Response): void => {
+    //extract
+    const idParam = req.params.id;
+
+    //convert it into number
+    const id = Number(idParam)
+
+    if(!isNaN(id)){
+        res.status(HTTP_STATUS.BAD_REQUEST).json({
+            message: "Invalid ticket id",
+        });
+        return;
+    }
+
+    try{
+        const ticket = userService.getTicketById(id);
+
+        if(!ticket){
+            res.status(HTTP_STATUS.BAD_REQUEST).json({
+                message: "Ticket not found",
+            });
+            return;
+        }
+
+        res.status(HTTP_STATUS.OK).json({
+            message:"Specific ticket retrieved succesfully",
+            data: ticket
+        });
+    } catch {
+        res.status(HTTP_STATUS.BAD_REQUEST).json({
+            message: "Ticket not found",
+        });
+    }
+};
+
+
