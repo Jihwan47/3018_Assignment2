@@ -65,7 +65,7 @@ export const createTicket = (title: string, description: string, priority: Prior
 };
 
 // return all tickets in the array.
-export const retrieveAllTicket = (): Ticket[] =>{
+export const getAllTicket = (): Ticket[] =>{
 
     return tickets;
 };
