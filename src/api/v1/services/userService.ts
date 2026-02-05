@@ -1,3 +1,4 @@
+
 enum Priority{ 
     Low = "low",
     Medium = "medium",
@@ -7,12 +8,11 @@ enum Priority{
 
 enum Status{
     Open = "open",
-    Close = "close",
     Resolved = "resolved"
 };
 
 //Interface of ticket
-interface Ticket {
+export interface Ticket {
     id: number;
     title: string;
     description: string;
@@ -24,7 +24,7 @@ interface Ticket {
 // extending Ticket interface using Type
 // Remove description from the original Ticket interface using Omit
 // and add urgent variables
-type TicketUrgency = Omit<Ticket, "description"> & {
+export type TicketUrgency = Omit<Ticket, "description"> & {
     ticketAge: number;
     urgencyScore: number;
     urgencyLevel: string;
@@ -42,23 +42,135 @@ const tickets: Ticket[] = [
 
 ];
 
-export const createTicket = (id: number, title: string, description: string, priority: Priority, status: Status,createdAt: Date): Ticket => {
+export const createTicket = (title: string, description: string, priority: Priority): Ticket => {
 
-    return { id: id, title: title, description: description, priority: priority, status: status, createdAt: createdAt };
+    const newId = tickets.length + 1;
 
+    if(!title || !description || !priority){
+        throw new Error("Missing required fields")
+    }
+
+    const newTicket: Ticket = 
+    {
+        id: newId,
+        title,
+        description,
+        priority,
+        status: Status.Open,
+        createdAt: new Date()
+    }
+
+    tickets.push(newTicket);
+    return newTicket;
 };
 
 // return all tickets in the array.
-export function retrieveAllTicket(): Ticket[]{
+export const retrieveAllTicket = (): Ticket[] =>{
 
     return tickets;
 };
 
-export function getTicketById(id: number): Ticket | undefined{
+export const getTicketById = (id: number): Ticket | undefined => {
+
+    const ticket = tickets.find(t => t.id === id);
+
+    if(!ticket){
+        throw new Error("Ticket not found");
+    }
 
     return tickets.find(ticket => ticket.id === id);
 };
 
+export const updateTicket = (id: number, data: any): Ticket | undefined => {
+
+    const ticket = getTicketById(id);
+
+    if(!ticket){
+        throw new Error("Ticket not found");
+    }
+
+    if(data.title !== undefined){
+        ticket.title = data.title;
+    }
+
+    if(data.description !== undefined){
+        ticket.description = data.description;
+    }
+
+    if(data.priority !== undefined){
+        ticket.priority = data.priority;
+    }
+
+    if(data.status !== undefined){
+        ticket.status = data.status;
+    }
+
+    return ticket;
+};
+
+export const deleteTicket = (id: number): string => {
+
+    const index: number = tickets.findIndex(ticket => ticket.id === id);
+
+    if(index === -1){
+        return "Item not found";
+    };
+
+    // slice 1 item in index position
+    tickets.splice(index, 1);
+    return "Item deleted";
+};
+
+export const getUrgentTicketById = (id: number): TicketUrgency | undefined => {
+
+    const ticket = getTicketById(id);
+
+    if(!ticket){
+        throw new Error("Ticket not found");
+    }
+
+    const diffInDays: number = 1000 * 60 * 60 * 24;
+    let ticketAge: number = Math.floor(Date.now() - ticket.createdAt.getTime()/diffInDays);
+
+    let baseScore: number = 0;
+    if(ticket.priority === Priority.Critical){
+        baseScore = 50;
+    }else if(ticket.priority === Priority.High){
+        baseScore = 30;
+    }else if(ticket.priority === Priority.Medium){
+        baseScore = 20;
+    }else{
+        baseScore = 10;
+    }
+
+    const multiplier: number = 5;
+    const urgencyScore: number = baseScore + (ticketAge * multiplier);
 
 
-export const delete
+    let urgencyLevel: string = "";
+
+    if(ticket.status === Status.Resolved){
+        urgencyLevel = "Minimal. Ticket resolved";
+    }
+
+    if(urgencyScore >= 80){
+        urgencyLevel = "Critical. Immediate attention required.";
+    }else if(urgencyScore > 51){
+        urgencyLevel = "High urgency. Prioritize resolution.";
+    }else if(urgencyScore >= 30){
+        urgencyLevel = "Moderate. Schedule for attention.";
+    }else{
+        urgencyLevel = "Low urgency. Address when capacity allows.";
+    }
+
+    return{
+        id: ticket.id,
+        title: ticket.title,
+        priority: ticket.priority,
+        status: ticket.status,
+        createdAt: ticket.createdAt,
+        ticketAge,
+        urgencyScore,
+        urgencyLevel
+    };
+}
