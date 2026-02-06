@@ -71,8 +71,6 @@ describe("getUrgentTicketById", () => {
                 "status": Status.Resolved,
                 "createdAt": calculateDay(10),
               }
-
-              console.log(sampleTicket);
  
               // Act
               const result: TicketUrgency | null = getUrgentTicketById(sampleTicket.id);
