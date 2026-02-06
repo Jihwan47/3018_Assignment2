@@ -1,10 +1,10 @@
 import request from "supertest";
-import express from "express";
-import ticketRoutes from "../src/api/v1/routes/ticketRoutes";
-import * as controller from "../src/api/v1/controllers/ticketController";
+import * as ticketController from "../src/api/v1/controllers/ticketController";
+import * as healthController from "../src/api/v1/controllers/healthController";
 import app from "../src/app";
 
 jest.mock("../src/api/v1/controllers/ticketController", () => ({
+    healthCheck: jest.fn((req,res) => res.status(200).send()),
     createTicket: jest.fn((req, res) => res.status(200).send()),
     getAllTickets: jest.fn((req, res) => res.status(201).send()),
     getTicketById: jest.fn((req, res) => res.status(200).send()),
@@ -13,22 +13,36 @@ jest.mock("../src/api/v1/controllers/ticketController", () => ({
     getUrgentTicketById: jest.fn((req, res) => res.status(200).send())
 }));
 
+jest.mock("../src/api/v1/controllers/healthController", () => ({
+    healthCheck: jest.fn((req,res) => res.status(200).send())
+}));
+
 describe("Mock healthRoutes/ticketRoutes testing", () => {
 
 	describe("GET /api/v1/health", () => {
-		it("should call health", async () => {
+		it("should call healthCheck function from healthController", async () => {
+            // Arrange
+
+            // Act
 			await request(app).get("/api/v1/health");
-			expect(controller.getAll).toHaveBeenCalled();
+
+            // Assert
+			expect(healthController.healthCheck).toHaveBeenCalled();
 		});
 	});
 
-	describe("POST /api/v1/resource", () => {
-		it("should call create controller", async () => {
-			await request(app).post("/api/v1/resource").send({
-				/* mock data */
-			});
-			expect(controller.create).toHaveBeenCalled();
+	describe("Get /api/v1/tickets", () => {
+		it("should call getAllTickets function from ticketController", async () => {
+			// Arrange
+
+            // Act
+			await request(app).get("/api/v1/tickets");
+
+            // Assert
+			expect(ticketController.getAllTickets).toHaveBeenCalled();
 		});
 	});
+
+    
 
 });
