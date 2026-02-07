@@ -99,6 +99,17 @@ describe("Mock healthRoutes/ticketRoutes testing", () => {
 		});
 	});
 
-   
+    describe("DELETE /api/v1/tickets/:id", () => {
+		it("should call updateTicket from ticketController", async () => {
+            // Arrange
+            
+            // Act
+            await request(app).delete("/api/v1/tickets/5");
+
+            // Assert
+			expect(ticketController.deleteTicket).toHaveBeenCalled();
+		});
+	});
+
 
 });
