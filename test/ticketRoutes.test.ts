@@ -71,7 +71,7 @@ describe("Mock healthRoutes/ticketRoutes testing", () => {
             const mockItem = {
                 "title": "Testing on createTicket function with Mock item",
                 "description": "Mocking fake item to test codes' behavior",
-                "priorty": Priority.Medium
+                "priority": Priority.Medium
             };
 
             // Act
