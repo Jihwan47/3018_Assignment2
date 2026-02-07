@@ -111,5 +111,25 @@ describe("Mock healthRoutes/ticketRoutes testing", () => {
 		});
 	});
 
+    describe("GET /api/v1/tickets/:id/urgency", () => {
+		it("should call getUrgentTicketById function from ticketController", async () => {
+			// Arrange
+            const mockItem: TicketUrgency = {
+                id: 4, 
+                title: "Password reset email delayed", 
+                priority: Priority.High, 
+                status: Status.Open, 
+                createdAt: calculateDay(5),
+                ticketAge: 5,
+                urgencyScore: 55,
+                urgencyLevel: "High urgency, Prioritize resolution."
+            }
 
+            // Act
+            await request(app).get("/api/v1/tickets/4/urgency").send(mockItem);
+
+            // Assert
+			expect(ticketController.getUrgentTicketById).toHaveBeenCalled();
+		});
+	});
 });
