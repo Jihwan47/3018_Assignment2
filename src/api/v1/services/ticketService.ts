@@ -19,6 +19,7 @@ export enum Priority{
  */
 export enum Status{
     Open = "open",
+    InProgress = "in-progress",
     Resolved = "resolved"
 };
 
@@ -241,7 +242,7 @@ export const getUrgentTicketById = (id: number): TicketUrgency => {
         urgencyScore = 0;
     }else if(urgencyScore >= 80){
         urgencyLevel = "Critical. Immediate attention required.";
-    }else if(urgencyScore > 51){
+    }else if(urgencyScore >= 55){
         urgencyLevel = "High urgency. Prioritize resolution.";
     }else if(urgencyScore >= 30){
         urgencyLevel = "Moderate. Schedule for attention.";
