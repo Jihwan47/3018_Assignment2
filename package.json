@@ -1,5 +1,5 @@
 {
-  "name": "3018_assignment2",
+  "name": "3018_assignment1",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,21 +11,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Jihwan47/3018_Assignment2.git"
+    "url": "git+https://github.com/Jihwan47/3018_Assignment1.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/Jihwan47/3018_Assignment2/issues"
+    "url": "https://github.com/Jihwan47/3018_Assignment1/issues"
   },
-  "homepage": "https://github.com/Jihwan47/3018_Assignment2#readme",
+  "homepage": "https://github.com/Jihwan47/3018_Assignment1#readme",
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
-    "@types/morgan": "^1.9.10",
-    "@types/node": "^25.1.0",
+    "@types/node": "^25.0.9",
     "@types/supertest": "^6.0.3",
     "jest": "^30.2.0",
     "supertest": "^7.2.2",
@@ -34,7 +33,6 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "express": "^5.2.1",
-    "morgan": "^1.10.1"
+    "express": "^5.2.1"
   }
 }
