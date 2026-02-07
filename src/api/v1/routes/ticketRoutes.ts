@@ -13,15 +13,15 @@ const router: Router = Router();
 
 // get All tickets
 router.get("/tickets", getAllTickets);
-// get Tickets by id
+// get a ticket by id
 router.get("/tickets/:id", getTicketById);
-// create ticket
+// create a ticket
 router.post("/tickets", createTicket);
-// UpdateTicket
+// Update an existing ticket
 router.put("/tickets/:id", updateTicket);
-// deleteTicket
+// delete an existing ticket
 router.delete("/tickets/:id", deleteTicket);
-// get urgent ticket
+// get an urgency ticket
 router.get("/tickets/:id/urgency", getUrgentTicketById);
 
 export default router;
