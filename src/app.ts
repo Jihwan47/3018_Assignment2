@@ -1,8 +1,8 @@
 import express, { Express } from "express";
 
 // import Routes modules
-import healthRoutes from "././api/v1/routes/healthRoutes";
-import userRoutes from "././api/v1/routes/userRoutes";
+import healthRoutes from "./api/v1/routes/healthRoutes"
+import ticketRoutes from "./api/v1/routes/ticketRoutes";
 
 // Initialize Express application
 const app: Express = express();
@@ -16,6 +16,7 @@ app.get("/", (req, res) => {
 // router handler
 // router defined in health routes, prefixed with /api/v1
 app.use("/api/v1", healthRoutes);
-app.use("/api/v1", userRoutes);
+// router defined in ticket routes, prefixed with /api/v1
+app.use("/api/v1", ticketRoutes);
 
 export default app;
