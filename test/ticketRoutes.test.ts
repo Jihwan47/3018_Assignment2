@@ -82,4 +82,23 @@ describe("Mock healthRoutes/ticketRoutes testing", () => {
 		});
 	});
 
+    describe("PUT /api/v1/tickets/:id", () => {
+		it("should call updateTicket from ticketController", async () => {
+            // Arrange
+            const mockItem = {
+                "id": 1,
+                "priority": Priority.Critical,
+                "status": Status.Resolved
+            };
+            
+            // Act
+            await request(app).put("/api/v1/tickets/1").send(mockItem);
+
+            // Assert
+			expect(ticketController.updateTicket).toHaveBeenCalled();
+		});
+	});
+
+   
+
 });
