@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "test": "jest",
-  "test:watch": "jest --watch",
-  "test:coverage": "jest --coverage",
-  "start": "ts-node src/server.ts"
-},
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "start": "ts-node src/server.ts"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Jihwan47/3018_Assignment1.git"
