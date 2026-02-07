@@ -43,7 +43,6 @@ const tickets: Ticket[] = [
     {id: 6, title: "Login page not loading", description: "Users report blank screen on login", priority: Priority.Critical, status: Status.Open, createdAt: calculateDay(6)},
     {id: 7, title: "Dark mode toggle broken", description: "Dark mode doesn't persist after refresh", priority: Priority.Medium, status: Status.Resolved, createdAt: calculateDay(10)},
     {id: 8, title: "Threshold Testing", description: "To find out where the threshold is", priority: Priority.Medium, status: Status.Open, createdAt: calculateDay(3)}
-
 ];
 
 export const createTicket = (title: string, description: string, priority: Priority): Ticket => {
