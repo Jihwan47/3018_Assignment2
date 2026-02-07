@@ -2,6 +2,7 @@ import request from "supertest";
 import * as ticketController from "../src/api/v1/controllers/ticketController";
 import * as healthController from "../src/api/v1/controllers/healthController";
 import app from "../src/app";
+import { Priority, Status, Ticket, TicketUrgency, calculateDay } from "../src/api/v1/services/ticketService";
 
 jest.mock("../src/api/v1/controllers/ticketController", () => ({
     healthCheck: jest.fn((req,res) => res.status(200).send()),
@@ -43,6 +44,25 @@ describe("Mock healthRoutes/ticketRoutes testing", () => {
 		});
 	});
 
-    
+    describe("GET /api/v1/tickets/:id", () => {
+		it("should call getTicketById function from ticketController", async () => {
+			// Arrange
+            const mockItem: Ticket = {
+                id: 2, 
+                title: "Profile picture upload slow", 
+                description: "Upload takes 30+ seconds", 
+                priority: Priority.Medium,
+                status: Status.Open, 
+                createdAt: calculateDay(2)
+            }
+
+            // Act
+            await request(app).get("/api/v1/tickets/2").send(mockItem);
+
+            // Assert
+			expect(ticketController.getTicketById).toHaveBeenCalled();
+		});
+	});
+
 
 });
