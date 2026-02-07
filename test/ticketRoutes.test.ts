@@ -7,7 +7,6 @@ import { Priority, Status, Ticket, TicketUrgency, calculateDay } from "../src/ap
 // set this controller function to return 200 default, so that i can check whether 
 // the router correctly calls the controller without testing the actual logic or using API
 jest.mock("../src/api/v1/controllers/ticketController", () => ({
-    healthCheck: jest.fn((req,res) => res.status(200).send()),
     createTicket: jest.fn((req, res) => res.status(200).send()),
     getAllTickets: jest.fn((req, res) => res.status(201).send()),
     getTicketById: jest.fn((req, res) => res.status(200).send()),
