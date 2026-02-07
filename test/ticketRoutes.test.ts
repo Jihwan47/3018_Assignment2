@@ -20,6 +20,10 @@ jest.mock("../src/api/v1/controllers/healthController", () => ({
 
 describe("Mock healthRoutes/ticketRoutes testing", () => {
 
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
 	describe("GET /api/v1/health", () => {
 		it("should call healthCheck function from healthController", async () => {
             // Arrange
