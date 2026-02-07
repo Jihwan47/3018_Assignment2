@@ -52,8 +52,12 @@ export const createTicket = (req: Request, res: Response): void => {
 export const getAllTickets = (req: Request, res: Response): void => {
     try{
         const tickets = ticketService.getAllTicket();
+
+        const count = tickets.length;
+
         res.status(HTTP_STATUS.OK).json({
             message: "All tickets retrieved successfully",
+            count: count,
             data: tickets
         });
     } catch (error: unknown) {
