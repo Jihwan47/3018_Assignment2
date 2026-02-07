@@ -65,4 +65,21 @@ describe("Mock healthRoutes/ticketRoutes testing", () => {
 	});
 
 
+    describe("POST /api/v1/tickets", () => {
+		it("should call createTicket from ticketController", async () => {
+            // Arrange
+            const mockItem = {
+                "title": "Testing on createTicket function with Mock item",
+                "description": "Mocking fake item to test codes' behavior",
+                "priorty": Priority.Medium
+            };
+
+            // Act
+            await request(app).post("/api/v1/tickets").send(mockItem);
+
+            // Assert
+			expect(ticketController.createTicket).toHaveBeenCalled();
+		});
+	});
+
 });
