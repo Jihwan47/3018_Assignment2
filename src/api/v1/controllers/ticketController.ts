@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import * as ticketService from "../services/ticketService";
-//createTicket, retrieveAllTicket
 
-// POST /api/v1/tickets
-// create ticket
+/**
+ * POST /api/v1/tickets
+ * create a new ticket
+ * validate required fields: title, description and priority
+ */
 export const createTicket = (req: Request, res: Response): void => {
     const{title, description, priority} = req.body;
 
@@ -24,8 +26,8 @@ export const createTicket = (req: Request, res: Response): void => {
         return;
     }
 
+    // priority validation
     const priorityLevel = ["critical", "high", "medium", "low" ]
-
     if(!priorityLevel.includes(priority)){
         res.status(HTTP_STATUS.BAD_REQUEST).json({
         message: "Invalid priority. Must be one of: critical, high, medium, low",
@@ -48,7 +50,11 @@ export const createTicket = (req: Request, res: Response): void => {
     }
 };
 
-//retrieve
+/**
+ * GET /api/v1/tickets
+ * retreive all tickets
+ * return the ticket list and the total number of tickets
+ */
 export const getAllTickets = (req: Request, res: Response): void => {
     try{
         const tickets = ticketService.getAllTicket();
@@ -67,7 +73,11 @@ export const getAllTickets = (req: Request, res: Response): void => {
     }
 };
 
-//retrieve
+/**
+ * GET /api/v1/tickets/:id
+ * retreive a specific ticket by its id
+ * validate if id is a number
+ */
 export const getTicketById = (req: Request, res: Response): void => {
     //extract
     const id: number = Number(req.params.id);
@@ -93,6 +103,11 @@ export const getTicketById = (req: Request, res: Response): void => {
     }
 };
 
+/**
+ * PUT /api/v1/tickets/:id
+ * update a specific ticket by its id
+ * validate if id is a number
+ */
 export const updateTicket = (req: Request, res: Response): void => {
 
     const id: number = Number(req.params.id);
@@ -117,6 +132,11 @@ export const updateTicket = (req: Request, res: Response): void => {
     }
 };
 
+/**
+ * DELETE /api/v1/tickets/:id
+ * delete a specific ticket by its id
+ * validate if id is a number
+ */
 export const deleteTicket = (req: Request, res: Response): void => {
 
     const id: number = Number(req.params.id);
@@ -142,6 +162,11 @@ export const deleteTicket = (req: Request, res: Response): void => {
     }
 };
 
+/**
+ * GET /api/v1/tickets/:id/urgency
+ * get a specific ticket by its id with urgency information
+ * validate if id is a number
+ */
 export const getUrgentTicketById = (req: Request, res: Response): void => {
 
     const id: number = Number(req.params.id);
